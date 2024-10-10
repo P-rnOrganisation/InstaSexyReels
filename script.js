@@ -1,5 +1,21 @@
 const repoURL = 'https://api.github.com/repos/gitporn69/instaserver/contents/'; // Replace with your GitHub repo details
 
+// Get all video elements on the page
+const videos = document.querySelectorAll('.video-player');
+
+// Iterate over each video element
+videos.forEach(video => {
+    video.addEventListener('play', () => {
+        // Pause all other videos when one is played
+        videos.forEach(v => {
+            if (v !== video) {
+                v.pause();
+            }
+        });
+    });
+});
+
+
 async function fetchMedia() {
     try {
         const response = await fetch(repoURL);
@@ -26,6 +42,7 @@ async function fetchMedia() {
                 videocard.setAttribute("class","video-card");
                 videoGalleryContent.appendChild(videocard);
                 const video = document.createElement('video');
+                video.setAttribute("class","video-player")
                 video.controls = true;
                 video.src = file.download_url;
                 videocard.appendChild(video);

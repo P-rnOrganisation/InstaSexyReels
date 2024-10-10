@@ -10,7 +10,7 @@ async function fetchMedia() {
         const imageGalleryContent=document.querySelector(".image-gallery .contents")
 
         data.forEach(file => {
-            if (file.name.endsWith('.jpg') || file.name.endsWith('.png') || file.name.endsWith('.HEIC')) {
+            if (file.name.endsWith('.jpg') || file.name.endsWith('.png') || file.name.endsWith('.heic')) {
                 const imagecard=document.createElement("div");
                 imagecard.setAttribute("class","image-card");
                 imageGalleryContent.appendChild(imagecard);

@@ -29,6 +29,22 @@
         </section>
     </div>
     <script src="script.js"></script>
+    <script>
+        // Get all video elements on the page
+const videos = document.querySelectorAll('.video-player');
+
+// Iterate over each video element
+videos.forEach(video => {
+    video.addEventListener('play', () => {
+        // Pause all other videos when one is played
+        videos.forEach(v => {
+            if (v !== video) {
+                v.pause();
+            }
+        });
+    });
+});
+    </script>
 </body>
 
 </html>

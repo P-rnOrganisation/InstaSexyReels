@@ -1,9 +1,21 @@
 const repoURL = 'https://api.github.com/repos/gitporn69/instaserver/contents/'; // Replace with your GitHub repo details
 
+const token=prompt("Enter you auth token: ")
+
 async function fetchMedia() {
     try {
-        const response = await fetch(repoURL);
+        const response = await fetch(repoURL, {
+            headers: {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github.v3+json',
+            }
+        });
         const data = await response.json();
+
+        if (data.message=="Bad credentials") {
+            alert("Wrong token! Try again refreshing the page!")
+            
+        }
 
         const videoGalleryContent = document.querySelector(".video-gallery .contents");
         const imageGalleryContent = document.querySelector(".image-gallery .contents");
@@ -34,23 +46,16 @@ async function fetchMedia() {
                 video.src = file.download_url;
                 videocard.appendChild(video);
 
-
-            }
-        });
-
-        // Get all video elements on the page
-        const videos = document.querySelectorAll('.video-player');
-
-        // Iterate over each video element
-        videos.forEach(video => {
-            video.addEventListener('play', () => {
-                // Pause all other videos when one is played
-                videos.forEach(v => {
-                    if (v !== video) {
-                        v.pause();
-                    }
+                // Add the event listener to pause other videos when one plays
+                video.addEventListener('play', () => {
+                    const videos = document.querySelectorAll('.video-player');
+                    videos.forEach(v => {
+                        if (v !== video) {
+                            v.pause();
+                        }
+                    });
                 });
-            });
+            }
         });
     } catch (error) {
         console.error('Error fetching media:', error);

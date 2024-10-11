@@ -1,54 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insta Sexies</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
-<link rel="manifest" href="favicon_io/site.webmanifest">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Insta Sexy Login</title>
+    <link rel="stylesheet" href="login.css">
 </head>
-
 <body>
-    <div class="container">
-        <h1>Instagram Beauties Below</h1>
-
-        <!-- Videos Section -->
-        <section class="video-gallery">
-            <h2>Videos</h2>
-            <div class="contents">
-                <!-- Videos are going to be rendered over here -->
+    <div class="login-container">
+        <form class="login-form">
+            <h2>Login</h2>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your username">
             </div>
-        </section>
-
-        <!-- Images Section -->
-        <section class="image-gallery">
-            <h2>Images</h2>
-            <div class="contents">
-
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="password-container">
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+                    <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                </div>
             </div>
-        </section>
+            <div class="input-group">
+                <button id="btn" type="submit">Login</button>
+            </div>
+        </form>
     </div>
+
     <script src="script.js"></script>
-    <script>
-        // Get all video elements on the page
-const videos = document.querySelectorAll('.video-player');
-
-// Iterate over each video element
-videos.forEach(video => {
-    video.addEventListener('play', () => {
-        // Pause all other videos when one is played
-        videos.forEach(v => {
-            if (v !== video) {
-                v.pause();
-            }
-        });
-    });
-});
-    </script>
 </body>
-
 </html>

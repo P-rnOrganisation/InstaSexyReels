@@ -1,39 +1,36 @@
 const repoURL = 'https://api.github.com/repos/gitporn69/instaserver/contents/'; // Replace with your GitHub repo details
 
-const login_html = `<head>
+// Store the initial HTML
+const insta_sexy_html = `<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Insta Sexy Login</title>
-    <link rel="stylesheet" href="login.css">
+    <title>Insta Sexies</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="login-container">
-        <form class="login-form">
-            <h2>Login</h2>
-            <div class="input-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required placeholder="Enter your username">
+    <div class="container">
+        <h1>Instagram Beauties Below</h1>
+
+        <!-- Videos Section -->
+        <section class="video-gallery">
+            <h2>Videos</h2>
+            <div class="contents">
+                <!-- Videos are going to be rendered over here -->
             </div>
-            <div class="input-group">
-                <label for="password">Password</label>
-                <div class="password-container">
-                    <input type="password" id="password" name="password" required placeholder="Enter your password">
-                    <span class="toggle-password" onclick="togglePassword()">👁️</span>
-                </div>
+        </section>
+
+        <!-- Images Section -->
+        <section class="image-gallery">
+            <h2>Images</h2>
+            <div class="contents">
+
             </div>
-            <div class="input-group">
-                <button id="btn" type="submit">Login</button>
-            </div>
-        </form>
+        </section>
     </div>
     <script src="script.js"></script>
-</body>`;
-
-// Store the initial HTML
-const insta_sexy_html = document.querySelector("html").innerHTML;
-
-document.querySelector("html").innerHTML = login_html;
+    <!-- <script src="script_copy.js"></script> -->
+</body>`
 
 function togglePassword() {
     var passwordField = document.getElementById('password');

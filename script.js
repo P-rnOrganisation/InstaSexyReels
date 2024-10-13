@@ -29,6 +29,16 @@ async function fetchMedia() {
                 video.controls = true;
                 video.src = file.download_url;
                 videocard.appendChild(video);
+
+                // Add the event listener to pause other videos when one plays
+                    video.addEventListener('play', () => {
+                        const videos = document.querySelectorAll('.video-player');
+                        videos.forEach(v => {
+                            if (v !== video) {
+                                v.pause();
+                            }
+                        });
+                    });
             }
         });
     } catch (error) {

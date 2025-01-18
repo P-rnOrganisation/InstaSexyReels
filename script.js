@@ -8,13 +8,6 @@ async function fetchMedia() {
         const videoGalleryContent = document.querySelector(".video-gallery .contents");
         const imageGalleryContent = document.querySelector(".image-gallery .contents");
 
-        // Sort the data based on the numerical index in the file names in descending order
-        data.sort((a, b) => {
-            const aIndex = parseInt(a.name.match(/\d+/)[0]);
-            const bIndex = parseInt(b.name.match(/\d+/)[0]);
-            return bIndex - aIndex;
-        });
-
         data.forEach(file => {
             if (file.name.endsWith('.jpg') || file.name.endsWith('.png') || file.name.endsWith('.heic')) {
                 // Create and append an image element
@@ -40,6 +33,8 @@ async function fetchMedia() {
                 video.controls = true;
                 video.src = file.download_url;
                 videocard.appendChild(video);
+
+
             }
         });
 

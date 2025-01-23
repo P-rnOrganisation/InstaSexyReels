@@ -1,4 +1,5 @@
 const repoURL = 'https://api.github.com/repos/gitporn69/instaserver/contents/'; // Replace with your GitHub repo details
+const customLinkBase = 'https://p-rnorganisation.github.io/InstaSexyReels'; // Replace with your custom link
 
 async function fetchMedia() {
     try {
@@ -20,62 +21,30 @@ async function fetchMedia() {
 
         // Populate video gallery
         videoFiles.forEach(file => {
+            const videoId = file.name.replace('.mp4', ''); // Use the numeric filename as ID
+
             const videocard = document.createElement("div");
             videocard.setAttribute("class", "video-card");
             videoGalleryContent.appendChild(videocard);
 
             const video = document.createElement('video');
             video.setAttribute("class", "video-player");
+            video.setAttribute("id", videoId); // Add video ID
             video.controls = true;
             video.src = file.download_url;
-
-            // Extract numeric value from file name and set as id
-            const videoId = file.name.match(/\d+/)[0];
-            video.id = `video-${videoId}`;
             videocard.appendChild(video);
 
-            // Add long press event listener for sharing options
-            let pressTimer;
-            videocard.addEventListener('mousedown', (e) => {
-            pressTimer = setTimeout(() => {
-                const shareDialog = document.createElement('div');
-                shareDialog.setAttribute('class', 'share-dialog');
-
-                const shareLink = document.createElement('a');
-                shareLink.href = file.download_url;
-                shareLink.textContent = 'Share';
-                shareLink.addEventListener('click', () => {
-                navigator.share({
-                    title: 'Check out this video',
-                    url: `https://p-rnorganisation.github.io/InstaSexyReels/#video-${videoId}?fullscreen=true`
-                });
-                });
-
-                const copyLink = document.createElement('button');
-                copyLink.textContent = 'Copy Link';
-                copyLink.addEventListener('click', () => {
-                navigator.clipboard.writeText(`https://p-rnorganisation.github.io/InstaSexyReels/#video-${videoId}?fullscreen=true`);
-                alert('Link copied to clipboard');
-                });
-
-                shareDialog.appendChild(shareLink);
-                shareDialog.appendChild(copyLink);
-                document.body.appendChild(shareDialog);
-
-                // Remove dialog after some time or on click outside
-                setTimeout(() => {
-                document.body.removeChild(shareDialog);
-                }, 5000);
-            }, 1000); // 1 second long press
+            // Add a link-sharing button to the controls
+            const shareLink = document.createElement('button');
+            shareLink.innerText = 'Share';
+            shareLink.setAttribute("class", "share-button");
+            shareLink.addEventListener('click', () => {
+                const customLink = `${customLinkBase}/#${videoId}?fullscreen=true`;
+                navigator.clipboard.writeText(customLink)
+                    .then(() => alert('Link copied to clipboard: ' + customLink))
+                    .catch(err => console.error('Error copying link: ', err));
             });
-
-            videocard.addEventListener('mouseup', () => {
-            clearTimeout(pressTimer);
-            });
-
-            videocard.addEventListener('mouseleave', () => {
-            clearTimeout(pressTimer);
-            });
+            videocard.appendChild(shareLink);
         });
 
         // Populate image gallery
@@ -104,6 +73,20 @@ async function fetchMedia() {
                 });
             });
         });
+
+        // Handle opening video in fullscreen from URL
+        const params = new URLSearchParams(window.location.search);
+        const videoId = window.location.hash.substring(1); // Get video ID from hash
+        const fullscreen = params.get('fullscreen');
+        const targetVideo = document.getElementById(videoId);
+
+        if (targetVideo && fullscreen === 'true') {
+            targetVideo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            targetVideo.requestFullscreen().catch(err => {
+                console.error("Failed to enable full-screen mode:", err);
+            });
+            targetVideo.play();
+        }
     } catch (error) {
         console.error('Error fetching media:', error);
     }

@@ -39,7 +39,7 @@ async function fetchMedia() {
             shareLink.innerText = 'Share';
             shareLink.setAttribute("class", "share-button");
             shareLink.addEventListener('click', () => {
-                const customLink = `${customLinkBase}/#${videoId}?fullscreen=true`;
+                const customLink = `${customLinkBase}/#${videoId}`;
                 navigator.clipboard.writeText(customLink)
                     .then(() => alert('Link copied to clipboard: ' + customLink))
                     .catch(err => console.error('Error copying link: ', err));
@@ -74,19 +74,19 @@ async function fetchMedia() {
             });
         });
 
-        // Handle opening video in fullscreen from URL
-        const params = new URLSearchParams(window.location.search);
-        const videoId = window.location.hash.substring(1); // Get video ID from hash
-        const fullscreen = params.get('fullscreen');
-        const targetVideo = document.getElementById(videoId);
+        // // Handle opening video in fullscreen from URL
+        // const params = new URLSearchParams(window.location.search);
+        // const videoId = window.location.hash.substring(1); // Get video ID from hash
+        // const fullscreen = params.get('fullscreen');
+        // const targetVideo = document.getElementById(videoId);
 
-        if (targetVideo && fullscreen === 'true') {
-            targetVideo.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            targetVideo.requestFullscreen().catch(err => {
-                console.error("Failed to enable full-screen mode:", err);
-            });
-            targetVideo.play();
-        }
+        // if (targetVideo && fullscreen === 'true') {
+        //     targetVideo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //     targetVideo.requestFullscreen().catch(err => {
+        //         console.error("Failed to enable full-screen mode:", err);
+        //     });
+        //     targetVideo.play();
+        // }
     } catch (error) {
         console.error('Error fetching media:', error);
     }
